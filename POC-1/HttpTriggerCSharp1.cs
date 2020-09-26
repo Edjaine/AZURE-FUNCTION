@@ -16,6 +16,7 @@ namespace Company.Function
         [FunctionName("HttpTriggerCSharp1")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
+            [Queue("fila-fn5", Connection = "AzureWebJobsStorage")] ICollector<string> msg,
             ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
@@ -32,8 +33,10 @@ namespace Company.Function
                 : $"Hello, {name}. This HTTP triggered function executed successfully.";
 
             int rowAfect = await CriaRegistro(responseMessage);
-
-            return new OkObjectResult($" Registros afetados {rowAfect} ");
+            log.LogInformation("persistido no banco de dados");
+            msg.Add($"Mensagem ----> ${responseMessage}");     
+            log.LogInformation("enviado para a fila");      
+            return new OkObjectResult($" Registros afetados {rowAfect}: Banco e Fila nova versão ");
         }
         public static async Task<int> CriaRegistro(string mensagem)
         {

@@ -1,0 +1,22 @@
+{
+  "generatedBy": "Microsoft.NET.Sdk.Functions-3.0.7",
+  "configurationSource": "attributes",
+  "bindings": [
+    {
+      "type": "cosmosDBTrigger",
+      "connectionStringSetting": "AzureWebJobsStorage",
+      "leaseCollectionName": "leases",
+      "collectionName": "Items",
+      "databaseName": "ToDoList",
+      "leaseDatabaseName": "ToDoList",
+      "createLeaseCollectionIfNotExists": false,
+      "startFromBeginning": false,
+      "useMultipleWriteLocations": false,
+      "useDefaultJsonSerialization": false,
+      "name": "input"
+    }
+  ],
+  "disabled": false,
+  "scriptFile": "../bin/AZURE-FUNCTION-2.dll",
+  "entryPoint": "Company.Function.CosmosDBTriggerCSharp1.Run"
+}
